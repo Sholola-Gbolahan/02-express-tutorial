@@ -1,4 +1,9 @@
 const http = require("http")
+const {readFileSync} = require('fs')
+
+// get all files
+// readFileSync is called only once when the first request is made.
+const homepage = readFileSync('./index.html');
 
 const server = http.createServer((req, res) => {
   // Checking information on type of request made and the path requested
@@ -10,7 +15,7 @@ const server = http.createServer((req, res) => {
   if (url === "/") {
     // Homepage
     res.writeHead(200, { "content-type": "text/html" })
-    res.write("<h1>Homepage</h1>")
+    res.write(homepage)
     res.end()
   }
 //   About Page
