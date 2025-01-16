@@ -7,9 +7,12 @@ const app = express()
 // Static mean is a file server doesn't have to change
 app.use(express.static('./public'))
 
-app.get("/", (req, res) => {
-  res.sendFile(path.resolve(__dirname, "./navbar-app/index.html"))
-})
+// app.get("/", (req, res) => {
+//   res.sendFile(path.resolve(__dirname, "./navbar-app/index.html"))
+
+// adding to static assets
+// SSR
+// })
 
 app.all("*", (req, res) => {
   res.status(404).send("resource not found")
