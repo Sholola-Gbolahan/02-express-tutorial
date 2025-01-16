@@ -1,55 +1,34 @@
-const http = require("http")
-const {readFileSync} = require('fs')
+const express = require("express")
 
-// get all files
-// readFileSync is called only once when the first request is made.
-const homepage = readFileSync('./navbar-app/index.html');
-const homeStyles = readFileSync('./navbar-app/styles.css');
-const homeLogic = readFileSync('./navbar-app/browser-app.js');
-const homeImage = readFileSync('./navbar-app/logo.svg');
+const app = express()
 
-const server = http.createServer((req, res) => {
-  // Checking information on type of request made and the path requested
-  console.log(req.url)
-
-  const url = req.url
-
-  if (url === "/") {
-    // Homepage
-    res.writeHead(200, { "content-type": "text/html" })
-    res.write(homepage)
-    res.end()
-  }
-//   About Page
-  else if(url === '/about'){
-    res.writeHead(200, { "content-type": "text/html" })
-    res.write("<h1>About Page</h1>")
-    res.end()
-  }
-//   Styles
-  else if(url === '/styles.css'){
-    res.writeHead(200, { "content-type": "text/css" })
-    res.write(homeStyles)
-    res.end()
-  }
-  //   image/Logo
-  else if(url === '/logo.svg'){
-    res.writeHead(200, { "content-type": "image/svg+xml" })
-    res.write(homeImage)
-    res.end()
-  }
-  //   Logic
-  else if(url === '/browser-app.js'){
-    res.writeHead(200, { "content-type": "text/javascript" })
-    res.write(homeLogic)
-    res.end()
-  }
-  else{
-    // 404
-    res.writeHead(404, { "content-type": "text/html" })
-    res.write("<h1>Page not found</h1>")
-    res.end()
-  }
+app.get("/", (req, res) => {
+  // we can pass ion string as well as HTML
+  // express uses send
+  console.log('User hit the server');
+  
+  res.status(200).send("Homepage")
 })
 
-server.listen(5000)
+app.get("/about", (req, res) => {
+  res.send("About Page")
+})
+
+
+// This handles all http verbs with any method
+app.all('*',(req,res)=>{
+    // status() is used to pass in the status code
+    res.status(404).send('<h1>Resource not found</h1>')
+})
+
+app.listen(5000, () => {
+  console.log("server is listen on port:5000")
+})
+
+// app.get - Read Data
+// app.post - Inster Data
+// app.put  - Update Data
+// app.delete - Delete Data
+// app.all
+// app.use
+// app.listen
