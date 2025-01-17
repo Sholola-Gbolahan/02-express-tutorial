@@ -22,11 +22,24 @@ app.get("/api/products/:productID", (req, res) => {
     res.json(singleProduct);
   })
 
+// Complex Params
   app.get('/api/products/:productID/reviews/:reviewID', (req, res) => {
     console.log(req);
     console.log(req.params);
     res.send('Hello World')
   })
+
+  // Query strings setup
+
+  app.get('/api/v1/query', (req,res)=>{
+    // query format is : http://localhost:5000/api/v1/query?name=john&age=32
+    console.log(req.query);
+    res.send('hello world')
+
+    
+  })
+
+
     
   
   
