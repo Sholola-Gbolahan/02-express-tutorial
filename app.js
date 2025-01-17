@@ -7,8 +7,13 @@ app.get("/", (req, res) => {
   res.send('<h1> Homepage</h1> <a href="api/products" > products</a>' )
 })
 // Route parameter is setup to avoid hand coding products params
-app.get("/api/products/1", (req, res) => {
-    const singleProduct = products.find((product)=> product.id === 1)
+app.get("/api/products/:productID", (req, res) => {
+  console.log(req);
+  console.log(req.params);
+  
+  const {productID} = req.params
+  // Converting productID from string to number 
+    const singleProduct = products.find((product)=> product.id === Number(productID))
     res.json(singleProduct)
   })                                                  
   
