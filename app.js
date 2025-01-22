@@ -2,12 +2,15 @@ const express = require("express")
 const { products } = require("./data")
 const logger = require("./logger")
 const authorize = require("./authorize")
+const morgan = require("morgan")
+
 const app = express()
 //  req => middleware => res
-
 // app.use([logger, authorize])
 
-app.use(express.static("./public"))
+// app.use(express.static("./public"))
+
+app.use(morgan("tiny"))
 
 app.get("/", (req, res) => {
   return res.send("Home")
@@ -21,7 +24,7 @@ app.get("/api/products", (req, res) => {
   return res.send("Products")
 })
 
-app.get("/api/items", [logger, authorize], (req, res) => {
+app.get("/api/items", (req, res) => {
   console.log(req.user)
 
   return res.send("Items")
