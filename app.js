@@ -7,6 +7,8 @@ const app = express()
 
 // app.use([logger, authorize])
 
+app.use(express.static("./public"))
+
 app.get("/", (req, res) => {
   return res.send("Home")
 })
