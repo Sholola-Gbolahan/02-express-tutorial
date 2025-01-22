@@ -20,6 +20,8 @@ app.get("/api/products", (req, res) => {
 })
 
 app.get("/api/items", (req, res) => {
+  console.log(req.user)
+
   return res.send("Items")
 })
 
