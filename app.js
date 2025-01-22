@@ -5,7 +5,7 @@ const authorize = require("./authorize")
 const app = express()
 //  req => middleware => res
 
-app.use([logger, authorize])
+// app.use([logger, authorize])
 
 app.get("/", (req, res) => {
   return res.send("Home")
@@ -19,7 +19,7 @@ app.get("/api/products", (req, res) => {
   return res.send("Products")
 })
 
-app.get("/api/items", (req, res) => {
+app.get("/api/items", [logger, authorize], (req, res) => {
   console.log(req.user)
 
   return res.send("Items")
