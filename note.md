@@ -6,6 +6,7 @@
   Next() is used to pass to the nest middleware
 - app.use : applies middlware to all our routes
 - express.urlencoded({encoded:false}) : built in middleware in express
+- express.json() : Middleware used to handle json
 
 ## Middleware Options
 
