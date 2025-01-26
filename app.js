@@ -65,14 +65,24 @@ app.put("/api/people/:id", (req, res) => {
   res.status(200).json({ success: true, data: newPeople })
 })
 
-app.post("/login", (req, res) => {
-  console.log(req.body)
-  const { name } = req.body
+// Deleting name
 
-  if (name) {
-    return res.status(200).send(`Welcome ${name}`)
+app.delete("/api/people/:id", (req, res) => {
+  const { id } = req.params
+
+  const person = people.find((person) => person.id === Number(id))
+
+  if (!person) {
+    return res
+      .status(404)
+      .json({ success: false, data: `no person with the id ${id}` })
   }
-  res.status(401).send("Please Provide Credential")
+
+  const newPeople = people.filter((person) => person.id !== Number(id))
+
+  console.log(newPeople)
+
+  res.status(200).json({ success: true, data: newPeople })
 })
 
 app.listen(5000, () => {
