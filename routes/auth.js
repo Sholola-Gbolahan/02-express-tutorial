@@ -2,9 +2,8 @@ const express = require("express")
 
 const router = express.Router()
 
-// Login route
 router.post("/", (req, res) => {
-  console.log(req.body) // Debugging: Check incoming request body
+  console.log(req.body)
   const { name } = req.body
 
   if (name) {
