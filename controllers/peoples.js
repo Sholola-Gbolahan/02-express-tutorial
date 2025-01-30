@@ -1,27 +1,10 @@
-const express = require("express")
+const { people } = require("../data")
 
-const app = express()
-
-// Importing routes for people
-const people = require("./routes/people")
-
-// importing routes for login
-const auth = require("./routes/auth")
-
-// Server static assets
-app.use(express.static("./methods-public"))
-
-// Parse form data
-app.use(express.urlencoded({ extended: false }))
-
-// Parse JSON
-app.use(express.json())
-
-app.get("/api/people", (req, res) => {
+const getPeople = (req, res) => {
   res.status(200).json({ success: true, data: people })
-})
+}
 
-app.post("/api/people", (req, res) => {
+const createPerson = (req, res) => {
   const { name } = req.body
 
   if (!name) {
@@ -30,9 +13,9 @@ app.post("/api/people", (req, res) => {
       .json({ success: false, msg: "please provide name value" })
   }
   res.status(201).json({ success: true, person: name })
-})
+}
 
-app.post("/api/postman/people", (req, res) => {
+const createPersonPostman = (req, res) => {
   const { name } = req.body
   if (!name) {
     return res
@@ -41,10 +24,9 @@ app.post("/api/postman/people", (req, res) => {
   }
 
   res.status(201).json({ success: true, data: [...people, name] })
-})
+}
 
-// Updating Name
-app.put("/api/people/:id", (req, res) => {
+const updatePerson = (req, res) => {
   // getting a particular data
   const { id } = req.params
   // getting value to update
@@ -69,28 +51,14 @@ app.put("/api/people/:id", (req, res) => {
     return person
   })
   res.status(200).json({ success: true, data: newPeople })
-})
+}
 
-// Deleting name
+const deletePerson = "Delete person"
 
-app.delete("/api/people/:id", (req, res) => {
-  const { id } = req.params
-
-  const person = people.find((person) => person.id === Number(id))
-
-  if (!person) {
-    return res
-      .status(404)
-      .json({ success: false, data: `no person with the id ${id}` })
-  }
-
-  const newPeople = people.filter((person) => person.id !== Number(id))
-
-  console.log(newPeople)
-
-  res.status(200).json({ success: true, data: newPeople })
-})
-
-app.listen(5000, () => {
-  console.log("server listening on port : 5000")
-})
+module.exports = {
+  getPeople,
+  createPerson,
+  updatePerson,
+  createPersonPostman,
+  deletePerson,
+}
