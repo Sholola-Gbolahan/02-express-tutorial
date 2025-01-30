@@ -17,5 +17,6 @@ router.post("/postman", createPersonPostman)
 
 // Updating Name
 router.put("/:id", updatePerson)
+router.delete("/:id", deletePerson)
 
 module.exports = router

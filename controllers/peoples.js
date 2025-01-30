@@ -53,7 +53,23 @@ const updatePerson = (req, res) => {
   res.status(200).json({ success: true, data: newPeople })
 }
 
-const deletePerson = "Delete person"
+const deletePerson = (req, res) => {
+  const { id } = req.params
+
+  const person = people.find((person) => person.id === Number(id))
+
+  if (!person) {
+    return res
+      .status(404)
+      .json({ success: false, data: `no person with the id ${id}` })
+  }
+
+  const newPeople = people.filter((person) => person.id !== Number(id))
+
+  console.log(newPeople)
+
+  res.status(200).json({ success: true, data: newPeople })
+}
 
 module.exports = {
   getPeople,
